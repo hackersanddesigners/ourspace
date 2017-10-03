@@ -3,10 +3,10 @@ var sleep = function(ms) {
 }
 
 var sendMessage = function(msg) {
-  var bci = document.querySelector(".block-compose .input");
+  var bci = document.querySelector(".pluggable-input-body");
   bci.innerHTML = msg;
   bci.dispatchEvent(new Event('input', { bubbles: true }));
-  document.querySelector(".block-compose .compose-btn-send").click();
+  document.querySelector(".compose-btn-send").click();
 }
 
 var bot = async function() {
