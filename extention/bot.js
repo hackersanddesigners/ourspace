@@ -32,14 +32,17 @@ function getUser(node) {
 }
 
 function handleMessage(mutations) {
-  if(1 === mutations.length) {
-    const mut = mutations[0];
-    if(1 === mut.addedNodes.length) {
-      const node = mut.addedNodes[0];
-      const msgStr = node.querySelector(msgSelector).innerHTML;
-      const userStr = getUser(node);
-      if(userStr != 'JBG') {
-        sendMessage(userStr + ' said ' + msgStr);
+  for(let i = 0; i < mutations.length; i++) {
+    const mut = mutations[i];
+    for(let j = 0; j < mut.addedNodes.length; j++) {
+      const node = mut.addedNodes[j];
+      const msgNode= node.querySelector(msgSelector);
+      if(msgNode) {
+        const msgStr = msgNode.innerHTML;
+        const userStr = getUser(node);
+        if(msgStr && userStr && userStr != 'Ourspace') {
+          sendMessage(userStr + ' said ' + msgStr);
+        }
       }
     }
   }
