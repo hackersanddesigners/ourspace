@@ -7,8 +7,11 @@ const imgSelector = '._3v3PK'
 const gifSelector = '._3CnDa'
 
 let started = false
+let running = false
 let survey = false
 let results = []
+
+const ws = new WebSocket("wss://bsqd.me/socket/websocket?vsn=2.0.0")
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -74,8 +77,9 @@ function processMsg(msg) {
 }
 
 async function perform(levelNum) {
+  running = true
   const data = getScript(levelNum)
-  for(let i = 0; i < data.length; i++) {
+  for(let i = 0; i < data.length && running; i++) {
 
     // Setup survey - JBG
     if(data[i].survey) {
@@ -95,6 +99,7 @@ async function perform(levelNum) {
     //}
 
   }
+  running = false
 }
 
 function handleMsgNode(node, msgNode) {
@@ -102,7 +107,9 @@ function handleMsgNode(node, msgNode) {
   const userStr = getUser(node)
   if(msgStr && userStr && userStr != 'Ourspace') {
     if(msgStr.toLowerCase().indexOf('bot perform') !== -1) {
-      if(msgStr.toLowerCase().indexOf('level 1') !== -1) perform(1)
+      if(msgStr.toLowerCase().indexOf('level 1') !== -1 && !running) perform(1)
+    } else if(msgStr.toLowerCase().indexOf('bot stop') !== -1) {
+      running = false
     } else if(survey) {
       results.push(msgStr) 
     } else {
