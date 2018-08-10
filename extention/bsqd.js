@@ -22,6 +22,7 @@ function sendMessage(msg) {
   document.querySelector(buttonSelector).click()
 }
 
+
 function getUser(node) {
   const nodeList = node.querySelectorAll('.copyable-text')
   if(nodeList.length > 0) {
@@ -34,17 +35,34 @@ function getUser(node) {
   }
 }
 
+function getScript(levelNum) {
+  switch(levelNum) {
+    case 2: return level2
+    case 3: return level3
+    case 4: return level4
+    default: return level1
+  }
+}
+
 function randomResult() {
   if(results.length > 0) {
     return results[Math.floor(Math.random() * Math.floor(results.length))]
   } else return '...'
 }
 
+function countResults(str) {
+  let count = 0;
+  results.forEach(r => {
+    if(r.toLowerCase().indexOf(str) !== -1) ++count
+  })
+  return count
+}
+
 function substitute(match, msg) {
   const fn = match.replace('[', '').replace(']', '')
   const args = fn.split(' ')
   if(args[0] === "random") return msg.replace(match, randomResult())
-  else if(args[0] === "count") return msg.replace(match, results.length)
+  else if(args[0] === "count") return msg.replace(match, countResults(args[1]))
   else return msg
 }
 
@@ -57,13 +75,11 @@ function processMsg(msg) {
   else return msg
 }
 
-async function perform() {
-
-  if(running) return;
-
+async function perform(levelNum) {
   running = true
-
+  const data = getScript(levelNum)
   for(let i = 0; i < data.length && running; i++) {
+
     // Setup survey - JBG
     if(data[i].survey) {
       survey = true
@@ -89,14 +105,14 @@ function handleMsgNode(node, msgNode) {
   const msgStr = msgNode.innerHTML
   const userStr = getUser(node)
   if(msgStr && userStr && userStr != 'Ourspace') {
-    if(msgStr.toLowerCase().indexOf('bot perform') !== -1 && !running) {
-      perform() 
+    if(msgStr.toLowerCase().indexOf('bot perform') !== -1) {
+      if(msgStr.toLowerCase().indexOf('level 1') !== -1 && !running) perform(1)
     } else if(msgStr.toLowerCase().indexOf('bot stop') !== -1) {
       running = false
     } else if(survey) {
       results.push(msgStr) 
     } else {
-      //sendMessage(userStr + ' said ' + msgStr)
+      sendMessage(userStr + ' said ' + msgStr)
     }
   }
 }
@@ -104,12 +120,7 @@ function handleMsgNode(node, msgNode) {
 function handleEmojiNode(node, emojiNode) {
   const emoji = emojiNode.querySelector('img').getAttribute('alt')
   const userStr = getUser(node)
-  //sendMessage(userStr + ' said ' + emoji)
-}
-
-function handleImageNode(node, imgNode) {
-  if(survey) results.push("")
-  //else sendMessage('Mooi beeld!')
+  sendMessage(userStr + ' said ' + emoji)
 }
 
 function handleMessage(mutations) {
@@ -123,13 +134,12 @@ function handleMessage(mutations) {
       const gifNode = node.querySelector(gifSelector)
 
       if(msgNode) handleMsgNode(node, msgNode)
-      //else if(emojiNode) handleEmojiNode(node, emojiNode) 
-      else if(imgNode) handleImageNode(node, imgNode)
-      else if(gifNode) sendMessage('Mooi gif!')
+      else if(emojiNode) handleEmojiNode(node, emojiNode) 
+      else if(imgNode) sendMessage('Nice image!')
+      else if(gifNode) sendMessage('Nice gif!')
     }
   }
 }
-
 
 function startObserver() {
   const b = document.querySelector(listSelector) 
@@ -137,16 +147,47 @@ function startObserver() {
   observer.observe(b, { childList: true })
 }
 
+
+async function init() {
+  const { Channel, Socket } = await import("https://cdn.jsdelivr.net/npm/phoenix-socket@1.2.3/vendor/socket.js")
+
+  console.log(Channel);
+
+  const BOT_ID = '5e6bbc3b-380c-43d1-a56d-9177cb3af85e'
+  const USER_ID = 'ourspace'
+
+  // open websocket
+
+  const socket = new Socket('wss://bsqd.me/socket')
+  socket.connect()
+  const channel = socket.channel('bot:' + BOT_ID, {user_id: USER_ID, context: { } })
+
+  return channel.join().receive('ok', resp => {
+
+    // set up listeners
+    channel.on('typing', m => {
+      console.log("Start typing…")
+    })
+
+    channel.on('message', m => {
+      console.log("Received message!", m)
+      sendMessage(m.payload.message)      
+    })
+
+    // sending a message to the bot
+    channel.push("user_action", { type: "message", payload: "Hello" });
+  });
+
+}
+
 async function bot()  {
   if(!started) {
-
-    started = true
     startObserver()
     sendMessage('BOT STARTED...')
-
-    //setInterval(() => {
-    //  sendMessage('PING: ' + new Date())
-    //}, 1000 * 60 * 60)
+    init()
+    setInterval(() => {
+      sendMessage('PING: ' + new Date())
+    }, 1000 * 60 * 60)
   }
 }
 
