@@ -93,6 +93,8 @@ function handleMsgNode(node, msgNode) {
       perform() 
     } else if(msgStr.toLowerCase().indexOf('bot stop') !== -1) {
       running = false
+    } else if(msgStr.toLowerCase().indexOf('ping') !== -1) {
+      sendMessage('pong')
     } else if(survey) {
       results.push(msgStr) 
     } else {
