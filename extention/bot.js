@@ -111,7 +111,7 @@ function handleEmojiNode(node, emojiNode) {
 
 function handleImageNode(node, imgNode) {
   if(survey) results.push("")
-  //else sendMessage('Mooi beeld!')
+  //else sendMessage('Mooie beeld!')
 }
 
 function handleMessage(mutations) {
@@ -127,7 +127,7 @@ function handleMessage(mutations) {
       if(msgNode) handleMsgNode(node, msgNode)
       //else if(emojiNode) handleEmojiNode(node, emojiNode) 
       else if(imgNode) handleImageNode(node, imgNode)
-      else if(gifNode) sendMessage('Mooi gif!')
+      else if(gifNode) sendMessage('Mooie gif!')
     }
   }
 }
