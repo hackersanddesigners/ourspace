@@ -33,7 +33,7 @@ const data = [
   {"msg": "🤖 Stalk deze persoon, kijk stiekem naar het uiterlijk, observeer het postuur en de bewegingen. ", "time": 30},
   {"msg": "🤖 Kopieer deze persoon exact... Probeer hem of haar te worden.", "time": 30},
   {"msg": "🤖 Cirkel nu om deze persoon heen.", "time": 20},
-  {"msg": "🤖 Maak oogcontact en kijk elkaar diep in de ogen.", "time": 30},
+  {"msg": "🤖 Maak oogcontact, sta stil, en kijk elkaar diep in de ogen.", "time": 30},
   {"msg": "🤖 Vind je deze persoon leuk, swipe dan naar rechts. Vind je het toch niks, swipe dan naar links.", "time": 20},
   {"msg": "🤖 Wil je een super like geven? Til deze persoon dan op.", "time": 20},
   {"msg": "🤖 Je bewegingen zijn super. Ik voel je!", "time": 10},
@@ -44,9 +44,9 @@ const data = [
   {"msg": "🤖 Kies een plek op de grens van Ourspace, sta met je gezicht naar binnen. Kijk naar elkaar.", "time": 20},
   {"msg": "🤖 Zie je nu vrienden of vreemdelingen? ", "time": 10},
   {"msg": "🤖 Hoeveel van je digitale vrienden zijn eigenlijk vreemdelingen voor jou? ", "time": 10},
-  {"msg": "🤖 Kun je je een leven voorstellen zonder digitale vriendschappen?", "time": 10},
+  {"msg": "🤖 Kun je je een leven voorstellen zonder digitale vriendschappen? Hoeveel vrienden ken je beter online dan offline?", "time": 10},
   {"msg": "🤖 Blijf staan als je digitale vrienden belangrijk voor je zijn, draai je om met je gezicht naar buiten wanneer je hier minder waarde aan hecht.", "time": 20},
   {"msg": "🤖 Ik ken je nu best goed, je beweegt je heel sociaal door mijn ruimte. Stuur je me een selfie ter herinnering?", "time": 20},
   {"msg": "🤖 Bedankt voor je vertrouwen, ik zal je data nooit vergeten.", "time": 10},
-  {"msg": "🤖 Double tap met je hand in de lucht om uit te loggen en scroll verder door RAUM.", "time": 10}
+  {"msg": "🤖 Ik daag je uit verder te scrollen door RAUM. Wie tap jij op de schouder, wie geef je een superlike? Double tap met je hand in de lucht om uit te loggen.", "time": 10}
 ];
