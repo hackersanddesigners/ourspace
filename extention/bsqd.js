@@ -119,8 +119,6 @@ function handleMessage(mutations) {
       const imgNode = node.querySelector(imgSelector)
       const gifNode = node.querySelector(gifSelector)
 
-      console.log("MSG NODE", msgNode)
-
       if(msgNode) handleMsgNode(node, msgNode)
 
       //else if(emojiNode) handleEmojiNode(node, emojiNode) 
@@ -131,14 +129,11 @@ function handleMessage(mutations) {
   }
 }
 
-
 function startObserver() {
   const b = document.querySelector(listSelector) 
   const observer = new MutationObserver(handleMessage)
   observer.observe(b, { childList: true })
 }
-
-
 
 async function init() {
   const { Channel, Socket } = await import("https://cdn.jsdelivr.net/npm/phoenix-socket@1.2.3/vendor/socket.js")
@@ -167,7 +162,7 @@ async function init() {
     })
 
     // sending a message to the bot
-    channel.push("user_action", { type: "message", payload: "Hello" });
+    //channel.push("user_action", { type: "message", payload: "Hello" });
   });
 }
 
@@ -175,7 +170,7 @@ async function bot()  {
   if(!started) {
     started = true
     startObserver()
-    sendMessage('BOT STARTED...')
+    sendMessage('BOT STARTED…')
     init()
 
     /*
