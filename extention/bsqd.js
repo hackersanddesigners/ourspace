@@ -6,6 +6,7 @@ const emojiSelector = '._2x9bY'
 const imgSelector = '._3v3PK'
 const gifSelector = '._3CnDa'
 
+let channel
 let started = false
 let running = false
 let survey = false
@@ -22,7 +23,6 @@ function sendMessage(msg) {
   document.querySelector(buttonSelector).click()
 }
 
-
 function getUser(node) {
   const nodeList = node.querySelectorAll('.copyable-text')
   if(nodeList.length > 0) {
@@ -35,34 +35,17 @@ function getUser(node) {
   }
 }
 
-function getScript(levelNum) {
-  switch(levelNum) {
-    case 2: return level2
-    case 3: return level3
-    case 4: return level4
-    default: return level1
-  }
-}
-
 function randomResult() {
   if(results.length > 0) {
     return results[Math.floor(Math.random() * Math.floor(results.length))]
   } else return '...'
 }
 
-function countResults(str) {
-  let count = 0;
-  results.forEach(r => {
-    if(r.toLowerCase().indexOf(str) !== -1) ++count
-  })
-  return count
-}
-
 function substitute(match, msg) {
   const fn = match.replace('[', '').replace(']', '')
   const args = fn.split(' ')
   if(args[0] === "random") return msg.replace(match, randomResult())
-  else if(args[0] === "count") return msg.replace(match, countResults(args[1]))
+  else if(args[0] === "count") return msg.replace(match, results.length)
   else return msg
 }
 
@@ -75,11 +58,13 @@ function processMsg(msg) {
   else return msg
 }
 
-async function perform(levelNum) {
-  running = true
-  const data = getScript(levelNum)
-  for(let i = 0; i < data.length && running; i++) {
+async function perform() {
 
+  if(running) return;
+
+  running = true
+
+  for(let i = 0; i < data.length && running; i++) {
     // Setup survey - JBG
     if(data[i].survey) {
       survey = true
@@ -104,15 +89,20 @@ async function perform(levelNum) {
 function handleMsgNode(node, msgNode) {
   const msgStr = msgNode.innerHTML
   const userStr = getUser(node)
+  console.log(msgStr, userStr, survey)
   if(msgStr && userStr && userStr != 'Ourspace') {
-    if(msgStr.toLowerCase().indexOf('bot perform') !== -1) {
-      if(msgStr.toLowerCase().indexOf('level 1') !== -1 && !running) perform(1)
+    if(msgStr.toLowerCase().indexOf('bot perform') !== -1 && !running) {
+      perform() 
     } else if(msgStr.toLowerCase().indexOf('bot stop') !== -1) {
       running = false
+    } else if(msgStr.toLowerCase().indexOf('ping') !== -1) {
+      sendMessage('pong')
     } else if(survey) {
       results.push(msgStr) 
     } else {
-      sendMessage(userStr + ' said ' + msgStr)
+      console.log("PUshing: " + msgStr)
+      channel.push("user_action", { type: "message", payload: msgStr });
+      //sendMessage(userStr + ' said ' + msgStr)
     }
   }
 }
@@ -120,7 +110,12 @@ function handleMsgNode(node, msgNode) {
 function handleEmojiNode(node, emojiNode) {
   const emoji = emojiNode.querySelector('img').getAttribute('alt')
   const userStr = getUser(node)
-  sendMessage(userStr + ' said ' + emoji)
+  //sendMessage(userStr + ' said ' + emoji)
+}
+
+function handleImageNode(node, imgNode) {
+  if(survey) results.push("")
+  //else sendMessage('Mooie beeld!')
 }
 
 function handleMessage(mutations) {
@@ -133,19 +128,23 @@ function handleMessage(mutations) {
       const imgNode = node.querySelector(imgSelector)
       const gifNode = node.querySelector(gifSelector)
 
+      console.log("MSG NODE", msgNode)
+
       if(msgNode) handleMsgNode(node, msgNode)
-      else if(emojiNode) handleEmojiNode(node, emojiNode) 
-      else if(imgNode) sendMessage('Nice image!')
-      else if(gifNode) sendMessage('Nice gif!')
+      //else if(emojiNode) handleEmojiNode(node, emojiNode) 
+      else if(imgNode) handleImageNode(node, imgNode)
+      else if(gifNode) sendMessage('Mooie gif!')
     }
   }
 }
+
 
 function startObserver() {
   const b = document.querySelector(listSelector) 
   const observer = new MutationObserver(handleMessage)
   observer.observe(b, { childList: true })
 }
+
 
 
 async function init() {
@@ -159,8 +158,8 @@ async function init() {
   // open websocket
 
   const socket = new Socket('wss://bsqd.me/socket')
+  channel = socket.channel('bot:' + BOT_ID, {user_id: USER_ID, context: { } })
   socket.connect()
-  const channel = socket.channel('bot:' + BOT_ID, {user_id: USER_ID, context: { } })
 
   return channel.join().receive('ok', resp => {
 
@@ -177,17 +176,23 @@ async function init() {
     // sending a message to the bot
     channel.push("user_action", { type: "message", payload: "Hello" });
   });
-
 }
 
 async function bot()  {
   if(!started) {
+    started = true
     startObserver()
     sendMessage('BOT STARTED...')
     init()
+
+    /*
     setInterval(() => {
       sendMessage('PING: ' + new Date())
     }, 1000 * 60 * 60)
+    */
+
   }
 }
+
+console.log("foobar")
 
