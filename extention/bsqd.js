@@ -90,21 +90,12 @@ function handleMsgNode(node, msgNode) {
   const msgStr = msgNode.innerHTML
   const userStr = getUser(node)
   console.log(msgStr, userStr, survey)
+
   if(msgStr && userStr && userStr != 'Ourspace') {
-    if(msgStr.toLowerCase().indexOf('bot perform') !== -1 && !running) {
-      perform() 
-    } else if(msgStr.toLowerCase().indexOf('bot stop') !== -1) {
-      running = false
-    } else if(msgStr.toLowerCase().indexOf('ping') !== -1) {
-      sendMessage('pong')
-    } else if(survey) {
-      results.push(msgStr) 
-    } else {
-      console.log("PUshing: " + msgStr)
-      channel.push("user_action", { type: "message", payload: msgStr });
-      //sendMessage(userStr + ' said ' + msgStr)
-    }
+    console.log("Pushing: " + msgStr)
+    channel.push("user_action", { type: "message", payload: msgStr });
   }
+
 }
 
 function handleEmojiNode(node, emojiNode) {
@@ -131,9 +122,11 @@ function handleMessage(mutations) {
       console.log("MSG NODE", msgNode)
 
       if(msgNode) handleMsgNode(node, msgNode)
+
       //else if(emojiNode) handleEmojiNode(node, emojiNode) 
-      else if(imgNode) handleImageNode(node, imgNode)
-      else if(gifNode) sendMessage('Mooie gif!')
+      //else if(imgNode) handleImageNode(node, imgNode)
+      //else if(gifNode) sendMessage('Mooie gif!')
+
     }
   }
 }
