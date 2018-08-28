@@ -49,4 +49,5 @@ const data = [
   {"msg": "🤖 Bedankt voor je data, ik zal je nooit vergeten!", "time": 5},
   {"msg": "🤖 We zijn aan het einde gekomen van deze Ourspace, Double tap met je hand in de lucht om uit te loggen en scroll verder door RAUM.", "time": 10},
   {"msg": "🤖 Reminder: tappen om vrienden te maken of til iemand eens op voor een super like...", "time": 5},
-  {"msg": "🤖 xxxxxxx" "time": 5},
+  {"msg": "🤖 xxxxxxx", "time": 5}
+]

@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["https://web.whatsapp.com/"],
-      "js": [ "bsqd.js", "scenes.js" ]
+      "js": [ "bot.js", "scenes.js" ]
     }
   ],
   "manifest_version": 2
