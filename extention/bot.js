@@ -92,9 +92,10 @@ function handleMsgNode(node, msgNode) {
     if(msgStr.toLowerCase().indexOf('bot perform') !== -1 && !running) {
       perform() 
     } else if(msgStr.toLowerCase().indexOf('bot stop') !== -1) {
+      sendMessage('🤖 Bye! 👋')
       running = false
     } else if(msgStr.toLowerCase().indexOf('ping') !== -1) {
-      sendMessage('pong')
+      sendMessage('🤖 🏓')
     } else if(survey) {
       results.push(msgStr) 
     } else {
@@ -144,7 +145,7 @@ async function bot()  {
 
     started = true
     startObserver()
-    sendMessage('BOT STARTED...')
+    sendMessage('🤖 Waiting for your command…')
 
     //setInterval(() => {
     //  sendMessage('PING: ' + new Date())
