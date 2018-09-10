@@ -3,10 +3,10 @@ function sleep(ms) {
 }
 
 function sendMessage(msg) {
-  var bci = document.querySelector(".pluggable-input-body");
+  var bci = document.querySelector("._2S1VP");
   bci.innerHTML = msg;
   bci.dispatchEvent(new Event('input', { bubbles: true }));
-  document.querySelector(".compose-btn-send").click();
+  document.querySelector("._35EW6").click();
 }
 
 async function bot() {
