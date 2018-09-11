@@ -24,7 +24,7 @@ const data = [
   {"msg": "🤖 Disconnect, je mag elkaar een comment geven.", "time": 20},
   {"msg": "🤖 Je sociale skills zijn super: ga zo door!", "time": 5},
   {"msg": "🤖 Verspreid je snel over de grenzen van Ourspace.", "time": 10},
-  {"msg": "🤖  ¯\_(ツ)_/¯  Ik wil graag wat meer over je te weten komen, wat doe jij in een vrij uurtje? Kies uit de volgende 3 opties:", "time": 10},
+  {"msg": "🤖 ¯\\_(ツ)_/¯  Ik wil graag wat meer over je te weten komen, wat doe jij in een vrij uurtje? Kies uit de volgende 3 opties:", "time": 10},
   {"msg": "🤖 Appen met vrienden: zoek een plek in Ourspace en squat. Afspreken met bekenden: steek over naar verschillende punten op de grenslijn. De hond uitlaten: loop slingerend door Ourspace met je telefoonarm ver voor je uitgestrekt ", "time": 35},
   {"msg": "🤖 Wat heerlijk deze data mining! Bring it on!", "time": 5},
   {"msg": "🤖 Spreek jij je vrienden gemiddeld vaker online of offline? Kies uit de volgende opties:", "time": 10},
