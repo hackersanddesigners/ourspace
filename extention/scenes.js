@@ -4,7 +4,7 @@ const data = [
   {"msg": "🤖 Eerst een warming up. Kijk naar je rechterbuur, daarna naar je linkerbuur. Doe dit 5 x.", "time": 20},
   {"msg": "🤖 Kijk naar beneden naar je telefoon (de turtle neck), en kijk daarna omhoog. Doe dit ook 5 x. ", "time": 20},
   {"msg": "🤖 Swipe 4 x met beide handen naar links en 4 x naar rechts.", "time": 15},
-  {"msg": "🤖 Goed! Steek je hand in de lucht en double tap om in te loggen en wandel door Ourspace om de ruimte te verkennen. Go!", "time": 25},
+  {"msg": "🤖 Goed! Steek je hand in de lucht en double tap om in te loggen. Wandel door Ourspace om de ruimte te verkennen. Go!", "time": 25},
   {"msg": "🤖 Je scrollt door Ourspace door in rechte lijnen te lopen. Sla linksaf óf rechtsaf wanneer je de grens of een persoon tegenkomt. Blijf dit patroon herhalen. ", "time": 30},
   {"msg": "🤖  ᕕ( ՞ ᗜ ՞ )ᕗ In een nieuwe sociale ruimte wil je dat je beste features naar voren komen. Neem grote stappen, maak je rug recht, je schouders breed en toon je beste kant.", "time": 30},
   {"msg": "🤖 Geef een update: maak een emoji met je gezicht, telkens als je iemand tegenkomt. ", "time": 30},
