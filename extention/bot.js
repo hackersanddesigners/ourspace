@@ -1,5 +1,5 @@
 //const composeSelector = '._2S1VP'
-const composeSelector = '._3u328'
+const composeSelector = 'footer ._3u328'
 //const buttonSelector = '._35EW6'
 const buttonSelector = '._3M-N-'
 //const listSelector = '._9tCEa'
